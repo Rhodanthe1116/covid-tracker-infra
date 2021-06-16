@@ -1,0 +1,36 @@
+# Copyright 2018 The Knative Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: autoscale-covid-tracker
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        # Target 100 in-flight-requests per pod.
+        autoscaling.knative.dev/target: "3"
+    spec:
+      containers:
+      - image: docker.io/hwww1116/covid-tracker
+        env:
+          - name: SERVICE
+            value: "all"
+          - name: AWS_ACCESS_KEY_ID
+            value: "ASIAR24YQQ5GNUZMU4HW"
+          - name: AWS_SECRET_ACCESS_KEY
+            value: "hQAzTo3QX8FpmdeJ4+oLnL5A0FNocbUEggDUK9iZ"
+          - name: AWS_SESSION_TOKEN
+            value: "FwoGZXIvYXdzEI7//////////wEaDFbTWQaZ9pdkOXQWSyLEASoaXpYojJiOK/9MWNE/LoULNQr9+o9Z8cW8CT9W+I6EGpr154fAvnd4rf7516/kCbNp7eTpTdi+uDNQdYCGZd5VHrPH0i/FRQKAj023jxvcA6fNmcbAD3b58DhYWlGQks+n0tH9Rjf5DtHbCLYa9Seaa2Tk6VIWPnVygNYVJnCzESXtb5KzXvc0C5xq7OnQIy/yRJkkgYRUfExHToiJG+1uYlCSxdGoAI52l/rqBDeKdlSzjoA0zTuneOiag+8JoeT9X+Eo3eunhgYyLYa/R+mJ7lcGhDo0XVDwaZ6SEuZouM4aRgle9l/aME1DATqk61i0WqXOEsyJXQ=="

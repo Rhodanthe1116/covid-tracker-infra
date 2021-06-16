@@ -1,0 +1,80 @@
+# Copyright 2019 TriggerMesh, Inc
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: go-openfaas-runtime
+spec:
+  params:
+  - name: IMAGE
+    description: The URI of the image to push, including registry host
+  - name: DIRECTORY
+    description: The subdirectory of the workspace/repo
+    default: "."
+  - name: SSH_KEY
+    description: SSH key 
+    default: "placeholder"
+  resources:
+    inputs:
+    - name: sources
+      targetPath: /workspace
+      type: git
+  steps:
+  - name: dockerfile
+    image: gcr.io/kaniko-project/executor:debug-v0.8.0
+    command:
+    - /busybox/sh
+    args:
+    - -c
+    - |
+      cd /workspace/workspace/$(inputs.params.DIRECTORY)
+      cat <<EOF > Dockerfile
+        FROM golang:1.11.1-alpine as builder
+
+        ENV GIT_SSH_COMMAND "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+        RUN apk --no-cache add make curl git\
+            && curl -sL https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog > /usr/bin/fwatchdog \
+            && chmod +x /usr/bin/fwatchdog \
+            && go get github.com/golang/dep/...
+        WORKDIR /go/src/github.com/triggermesh/handler
+        COPY . .
+        RUN if [ -f "$HOME/.ssh/id_$(inputs.params.SSH_KEY)" ]; then \
+            eval "\$(ssh-agent -s)"; \
+            ssh-add $HOME/.ssh/id_$(inputs.params.SSH_KEY); \
+        fi \
+        && if [ -f "Gopkg.toml" ]; then dep ensure; fi \
+        && go get -v \
+        && go install 
+
+        FROM alpine:3.7
+        RUN apk --no-cache add ca-certificates 
+        COPY --from=builder /usr/bin/fwatchdog  /usr/bin/fwatchdog
+        COPY --from=builder /go/bin/handler  /usr/bin/handler
+        ENV fprocess "/usr/bin/handler"
+
+        CMD ["/usr/bin/fwatchdog"]
+      EOF
+  - name: export
+    image: gcr.io/kaniko-project/executor:debug-v0.8.0
+    args:
+    - --context=/workspace/workspace/$(inputs.params.DIRECTORY)
+    - --dockerfile=Dockerfile
+    - --destination=$(inputs.params.IMAGE)
+    # Workaround not to use default config which requires gcloud credentials 
+    # to pull base image from public gcr registry 
+    # https://groups.google.com/d/msg/kaniko-users/r5yoP_Ejm_c/ExoEXksDBAAJ
+    env:
+    - name: DOCKER_CONFIG
+      value: "/"

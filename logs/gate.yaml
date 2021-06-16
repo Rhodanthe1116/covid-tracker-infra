@@ -1,0 +1,116 @@
+apiVersion: v1
+items:
+- apiVersion: networking.istio.io/v1beta1
+  kind: Gateway
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"Gateway","metadata":{"annotations":{},"labels":{"networking.knative.dev/ingress-provider":"istio","serving.knative.dev/release":"v0.23.0"},"name":"knative-ingress-gateway","namespace":"knative-serving"},"spec":{"selector":{"istio":"ingressgateway"},"servers":[{"hosts":["*"],"port":{"name":"http","number":80,"protocol":"HTTP"}}]}}
+    creationTimestamp: "2021-06-16T12:25:16Z"
+    generation: 1
+    labels:
+      networking.knative.dev/ingress-provider: istio
+      serving.knative.dev/release: v0.23.0
+    name: knative-ingress-gateway
+    namespace: knative-serving
+    resourceVersion: "15434"
+    selfLink: /apis/networking.istio.io/v1beta1/namespaces/knative-serving/gateways/knative-ingress-gateway
+    uid: 98565844-73e7-4273-ac06-f95e412cb254
+  spec:
+    selector:
+      istio: ingressgateway
+    servers:
+    - hosts:
+      - '*'
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+- apiVersion: networking.istio.io/v1beta1
+  kind: Gateway
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"Gateway","metadata":{"annotations":{},"labels":{"networking.knative.dev/ingress-provider":"istio","serving.knative.dev/release":"v0.23.0"},"name":"knative-local-gateway","namespace":"knative-serving"},"spec":{"selector":{"istio":"ingressgateway"},"servers":[{"hosts":["*"],"port":{"name":"http","number":8081,"protocol":"HTTP"}}]}}
+    creationTimestamp: "2021-06-16T12:25:17Z"
+    generation: 1
+    labels:
+      networking.knative.dev/ingress-provider: istio
+      serving.knative.dev/release: v0.23.0
+    name: knative-local-gateway
+    namespace: knative-serving
+    resourceVersion: "15457"
+    selfLink: /apis/networking.istio.io/v1beta1/namespaces/knative-serving/gateways/knative-local-gateway
+    uid: 7178cb78-8408-439f-a74a-c95bba82fc38
+  spec:
+    selector:
+      istio: ingressgateway
+    servers:
+    - hosts:
+      - '*'
+      port:
+        name: http
+        number: 8081
+        protocol: HTTP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+apiVersion: v1
+items:
+- apiVersion: networking.istio.io/v1beta1
+  kind: Gateway
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"Gateway","metadata":{"annotations":{},"labels":{"networking.knative.dev/ingress-provider":"istio","serving.knative.dev/release":"v0.23.0"},"name":"knative-ingress-gateway","namespace":"knative-serving"},"spec":{"selector":{"istio":"ingressgateway"},"servers":[{"hosts":["*"],"port":{"name":"http","number":80,"protocol":"HTTP"}}]}}
+    creationTimestamp: "2021-06-16T12:25:16Z"
+    generation: 1
+    labels:
+      networking.knative.dev/ingress-provider: istio
+      serving.knative.dev/release: v0.23.0
+    name: knative-ingress-gateway
+    namespace: knative-serving
+    resourceVersion: "15434"
+    selfLink: /apis/networking.istio.io/v1beta1/namespaces/knative-serving/gateways/knative-ingress-gateway
+    uid: 98565844-73e7-4273-ac06-f95e412cb254
+  spec:
+    selector:
+      istio: ingressgateway
+    servers:
+    - hosts:
+      - '*'
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+- apiVersion: networking.istio.io/v1beta1
+  kind: Gateway
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"Gateway","metadata":{"annotations":{},"labels":{"networking.knative.dev/ingress-provider":"istio","serving.knative.dev/release":"v0.23.0"},"name":"knative-local-gateway","namespace":"knative-serving"},"spec":{"selector":{"istio":"ingressgateway"},"servers":[{"hosts":["*"],"port":{"name":"http","number":8081,"protocol":"HTTP"}}]}}
+    creationTimestamp: "2021-06-16T12:25:17Z"
+    generation: 1
+    labels:
+      networking.knative.dev/ingress-provider: istio
+      serving.knative.dev/release: v0.23.0
+    name: knative-local-gateway
+    namespace: knative-serving
+    resourceVersion: "15457"
+    selfLink: /apis/networking.istio.io/v1beta1/namespaces/knative-serving/gateways/knative-local-gateway
+    uid: 7178cb78-8408-439f-a74a-c95bba82fc38
+  spec:
+    selector:
+      istio: ingressgateway
+    servers:
+    - hosts:
+      - '*'
+      port:
+        name: http
+        number: 8081
+        protocol: HTTP
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

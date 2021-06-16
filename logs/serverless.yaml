@@ -1,0 +1,30 @@
+service: tm-demo
+description: "serverless.yaml deployment test"
+
+provider:
+  name: triggermesh
+  environment:
+    FOO: BAR
+
+functions:
+  user:
+    source: https://github.com/Rhodanthe1116/go-gin-dynamodb
+    runtime: https://raw.githubusercontent.com/triggermesh/openfaas-runtime/master/go/openfaas-go-runtime.yaml
+    environment:
+      FUNCTION: bar
+
+  store:
+    source: https://github.com/Rhodanthe1116/go-gin-dynamodb
+    runtime: https://raw.githubusercontent.com/triggermesh/openfaas-runtime/master/go/openfaas-go-runtime.yaml
+    environment:
+      foo: bar
+    
+  record:
+    source: https://github.com/openfaas/faas
+    runtime: https://raw.githubusercontent.com/triggermesh/openfaas-runtime/master/go/openfaas-go-runtime.yaml
+    description: "nodejs fragment"
+    environment:
+      FUNCTION: nodejs
+
+include:
+  - https://github.com/tzununbekov/serverless-include
