@@ -1,12 +1,6 @@
 # README
 
-## Reference
-
-https://eksctl.io/usage/minimum-iam-policies/
-https://knative.dev/docs/install/install-serving-with-yaml/
-https://docs.triggermesh.io/tm/usage/
-https://github.com/triggermesh/tm
-https://github.com/triggermesh/knative-lambda-runtime
+![](https://i.imgur.com/cpv72T3.jpg)
 
 ## Setup local cli
 
@@ -240,6 +234,8 @@ knative get ksvc
 
 #### Routing
 
+![](https://i.imgur.com/kme8gFM.png)
+
 ```bash
 kubectl get route user-service  --output=custom-columns=NAME:.metadata.name,URL:.status.url
 
@@ -251,28 +247,6 @@ curl http://${GATEWAY_HOSTNAME} --header "Host:user-service.default.${GATEWAY_HO
 
 curl http://${GATEWAY_IP}/record --header "Host: ${GATEWAY_HOSTNAME}"
 curl http://${GATEWAY_HOSTNAME}/record
-
-
-
-INGRESSGATEWAY=istio-ingressgateway
-
-export GATEWAY_HOSTNAME=`kubectl get svc $INGRESSGATEWAY --namespace istio-system \
-    --output jsonpath="{.status.loadBalancer.ingress[*]['hostname']}"`
-
-curl -v http://6BC52EC1E13C8888CDC3B65FC3113B92.gr7.us-east-1.eks.amazonaws.com/record --header "Host: 52.203.67.181.sslip.io"
-
-
-export INGRESS_HOST=$(kubectl -n istio-system \
-get service istio-ingressgateway \
--o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-export INGRESS_PORT=$(kubectl -n istio-system \
-get service istio-ingressgateway \
--o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
-export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
-
-curl http:/$INGRESS_HOST:$INGRESS_PORT/record --header "Host: 52.203.67.181.sslip.io"
-
-
 ```
 
 ### Uninstall
@@ -418,3 +392,12 @@ knative get pods
 hey -z 30s -c 50 \
  "https://tm-demo-go-openfaas.z0916945857.k.triggermesh.io/" \
  && tm get services
+
+
+## Reference
+
+https://eksctl.io/usage/minimum-iam-policies/
+https://knative.dev/docs/install/install-serving-with-yaml/
+https://docs.triggermesh.io/tm/usage/
+https://github.com/triggermesh/tm
+https://github.com/triggermesh/knative-lambda-runtime
