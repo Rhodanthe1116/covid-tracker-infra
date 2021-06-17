@@ -1,6 +1,17 @@
 # README
 
 ![](https://i.imgur.com/cpv72T3.jpg)
+![](https://i.imgur.com/kme8gFM.png)
+
+## Table of Contents
+
+- [](#setup-local-cli)
+- [](#deploy-k8s-cluster)
+- [](#install-knative-in-your-eks-cluster)
+- [](#deploy-service-on-knative)
+- [](#addtional-deploy-with-triggermesh)
+- [](#load-testing)
+- [](#reference)
 
 ## Setup local cli
 
@@ -186,14 +197,14 @@ knative apply -f https://github.com/knative/net-istio/releases/download/v0.23.0/
 knative --namespace istio-system get service istio-ingressgateway
 ```
 
-## Verify
+### Verify Knative Serving, Istio
 
 ```bash
 knative get pods --namespace knative-serving
 knative get pods --namespace istio-system
 ```
 
-## Configure DNS
+### Configure DNS
 
 ```bash
 knative apply -f https://github.com/knative/serving/releases/download/v0.23.0/serving-default-domain.yaml
@@ -261,11 +272,11 @@ knative delete -f https://github.com/knative/net-istio/releases/download/v0.23.0
 
 ## Addtional: Deploy with TriggerMesh
 
-## Install the TriggerMesh CLI tm
+### Install the TriggerMesh CLI tm
 
 ...in Dockerfile
 
-### Verify TriggerMesh tm
+#### Verify TriggerMesh tm
 
 ```bash
 which tm
@@ -275,24 +286,24 @@ which tm
 alias tmk='tm --config=eksknative.yaml'
 ```
 
-### Verify
+#### Verify
 
 ```bash
 tmk get services
 ```
 
-## Deploy a Function with the Knative Lambda Runtime (KLR)
+### Deploy a Function with the Knative Lambda Runtime (KLR)
 
-## Deploy function using Go Knative lambda runtime
+### Deploy function using Go Knative lambda runtime
 
-## https://github.com/triggermesh/tm
+### https://github.com/triggermesh/tm
 
 ```bash
 tmk deploy service go-lambda -f . --runtime https://raw.githubusercontent.com/triggermesh/knative-lambda-runtime/master/go/runtime.yaml --wait
 tmk deploy service go-lambda -f ./lambda/. --runtime https://raw.githubusercontent.com/triggermesh/knative-lambda-runtime/master/go/runtime.yaml --wait
 ```
 
-## Docker
+### Docker
 
 ```bash
 tmk deploy service foo -f gcr.io/google-samples/hello-app:1.0 --wait
@@ -311,7 +322,7 @@ tm deploy service covid-tracker-store \
  -e foo=bar \
  --wait
 
-## Others
+### Others
 
 tm deploy -f https://github.com/tzununbekov/serverless
 
@@ -319,7 +330,7 @@ tm deploy -f ./serverless.yaml
 
 https://github.com/tzununbekov/serverless
 
-## On triggermesh Cloud
+### On triggermesh Cloud
 
 ```sh
 mkdir secrets
@@ -342,7 +353,7 @@ curl -X GET $ROOT/auth/store/profile -H 'Authorization: Bearer <store's jwt toke
 curl -X POST $ROOT/records -H 'Authorization: Bearer <user's jwt token>' -d '{"store_id": "0987654321"}'
 ```
 
-## Hey
+### Hey
 
 https://knative.dev/docs/serving/autoscaling/autoscale-go/
 
@@ -367,7 +378,7 @@ curl \
   "$ROOT/records"
 ```
 
-## User
+### User
 
 ```bash
 go get -u github.com/rakyll/hey
@@ -387,7 +398,7 @@ hey -z 30s -c 50 \
 knative get pods
 ```
 
-## Store
+### Store
 
 hey -z 30s -c 50 \
  "https://tm-demo-go-openfaas.z0916945857.k.triggermesh.io/" \
