@@ -5,13 +5,13 @@
 
 ## Table of Contents
 
-- [](#setup-local-cli)
-- [](#deploy-k8s-cluster)
-- [](#install-knative-in-your-eks-cluster)
-- [](#deploy-service-on-knative)
-- [](#addtional-deploy-with-triggermesh)
-- [](#load-testing)
-- [](#reference)
+- [Setup Local CLI](#setup-local-cli)
+- [Deploy K8S Cluster](#deploy-k8s-cluster)
+- [Install Knative in Your EKS Cluster](#install-knative-in-your-eks-cluster)
+- [Deploy Service on Knative](#deploy-service-on-knative)
+- [Addtional Deploy with Triggermesh](#addtional-deploy-with-triggermesh)
+- [Load Testing](#load-testing)
+- [Reference](#reference)
 
 ## Setup local cli
 
